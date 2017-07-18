@@ -1,4 +1,4 @@
-name: "DHN-deploy"
+name: "HashNet-deploy"
 input: "data"
 input_dim: 50
 input_dim: 3
@@ -309,11 +309,10 @@ layer {
   }
 }
 layer {
-  name: "fc8_flickr"
+  name: "encoding"
   type: "InnerProduct"
   bottom: "fc7"
   top: "fc8_flickr"
-  # lr_mult is set to higher than for other layers, because this layer is starting from random while the others are already trained
   param {
     lr_mult: 10
     decay_mult: 1
@@ -334,9 +333,3 @@ layer {
     }
   }
 }
-#layer {
-#  name: "tanh8"
-#  type: "TanH"
-#  bottom: "fc8_flickr"
-#  top: "fc8_flickr"
-#}
