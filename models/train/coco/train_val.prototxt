@@ -357,7 +357,7 @@ layer {
   }
 }
 layer {
-  name: "fc8_flickr"
+  name: "encoding"
   type: "InnerProduct"
   bottom: "fc7"
   top: "fc8_code"
@@ -382,7 +382,7 @@ layer {
   }
 }
 layer {
-  name: "tanh8"
+  name: "continuation"
   type: "ScaleTanH"
   bottom: "fc8_code"
   top: "fc8_code"
