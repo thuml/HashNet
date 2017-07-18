@@ -26,3 +26,14 @@ You can evaluate the Mean Average Precision(MAP) result on each dataset using th
 dataset_name = imagenet, nuswide_81 or coco
 python models/predict/dataset_name/predict_parallel.py --gpu gpu_id --model_path your_caffemodel_path --save_path the_path_to_save_your_code
 ```
+
+## Citation
+If you use this code for your research, please consider citing:
+```
+@article{cao2017hashnet,
+  title={HashNet: Deep Learning to Hash by Continuation},
+  author={Cao, Zhangjie and Long, Mingsheng and Wang, Jianmin and Yu, Philip S},
+  journal={arXiv preprint arXiv:1702.00758},
+  year={2017}
+}
+```
