@@ -121,7 +121,7 @@ for i in range(nthreads):
                   image_dims=(256,256),
                   scale=255,
                   database="./data/imagenet/test/database" + str(i) + ".txt",
-                  validation="./data/imagenet/test/valid" + str(i) + ".txt",
+                  validation="./data/imagenet/test/test" + str(i) + ".txt",
                   batch_size=50,
                   mean_file="./python/caffe/imagenet/ilsvrc_2012_mean.npy",
                   gpu=args.gpu[0]))
