@@ -20,7 +20,7 @@ dataset_name = imagenet, nuswide_81 or coco
 ./build/tools/caffe train -solver models/train/dataset_name/solver.prototxt -weights ./models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel -gpu gpu_id
 ```
 
-## Evaludation
+## Evaluation
 You can evaluate the Mean Average Precision(MAP) result on each dataset using the followling command.
 ```
 dataset_name = imagenet, nuswide_81 or coco
