@@ -272,7 +272,6 @@ layer {
   type: "InnerProduct"
   bottom: "fc6"
   top: "fc7"
-  # Note that lr_mult can be set to 0 to disable any fine-tuning of this, and any other, layer
   param {
     lr_mult: 1
     decay_mult: 1
