@@ -1,9 +1,8 @@
 # Training Instructions
-#Different hash code length
+## Different hash code length
 You can set different code length in the train_val.prototxt file as follows.
 First, find this layer:
 ```
-...
 layer {
   name: "fc8_flickr"
   type: "InnerProduct"
@@ -53,5 +52,5 @@ layer {
 ```
 Set the sigmoid_param to 10 / code length.
 
-# Different datasets
+## Different datasets
 All the parameters are set for the datasets in our experiments. If you want to perform our methods on your own dataset, you need to calculate the number of 1s / the number of 0s in your train set and set class_num parameter in PairwiseLoss Layer.
