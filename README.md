@@ -25,7 +25,7 @@ cd ./data/coco
 unzip train2014.zip
 unzip val2014.zip
 ```
-If you use our share [link](https://drive.google.com/drive/folders/0B7IzDz-4yH_HOXdoaDU4dk40RFE?usp=sharing)
+If you use our shared [link](https://drive.google.com/drive/folders/0B7IzDz-4yH_HOXdoaDU4dk40RFE?usp=sharing)
 ```
 mv coco.tar.gz ./data/coco
 cd ./data/coco
