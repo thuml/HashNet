@@ -1,0 +1,11 @@
+net: "./models/train/nuswide_81/train_val.prototxt"
+base_lr: 0.00005
+lr_policy: "step"
+gamma: 0.5
+stepsize: 2000
+display: 1000
+max_iter: 10000
+momentum: 0.9
+weight_decay: 0.0005
+snapshot: 1000
+snapshot_prefix: "models/train/nuswide_81/caffemodel/nuswide_81"
