@@ -4,7 +4,35 @@ Code release for ["HashNet: Deep Learning to Hash by Continuation" (ICCV 2017)](
 ## Datasets
 We use ImageNet, NUS-WIDE and COCO dataset in our experiments. You can download the ImageNet dataset and NUS-WIDE dataset [here](https://drive.google.com/drive/folders/0B7IzDz-4yH_HOXdoaDU4dk40RFE?usp=sharing).
 As for COCO dataset, we use COCO 2014, which can be downloaded [here](http://mscoco.org/dataset/#download). And in case of COCO changes in the future, we also provide a download link [here](https://drive.google.com/drive/folders/0B7IzDz-4yH_HOXdoaDU4dk40RFE?usp=sharing) on google drive.
-After downloading, you need to move the imagenet.tar.gz to [./data/imagenet](./data/imagenet) and extract the file there. Also, you need to move the nus_wide.tar.gz to [./data/nuswide_81](./data/nuswide_81) and extract the file there. For COCO dataset, you need to extract both train and val archive for COCO in [./data/coco](./data/coco) 
+After downloading, you need to move the imagenet.tar.gz to [./data/imagenet](./data/imagenet) and extract the file there.
+```
+mv imagenet.tar.gz ./data/imagenet
+cd ./data/imagenet
+tar -zxvf imagenet.tar.gz
+```
+Also, for NUS-WIDE, you need to move the nus_wide.tar.gz to [./data/nuswide_81](./data/nuswide_81) and extract the file there. 
+```
+mv nus_wide.tar.gz ./data/nuswide_81
+cd ./data/nuswide_81
+tar -zxvf nus_wide.tar.gz
+```
+For COCO dataset, you need to extract both train and val archive for COCO in [./data/coco](./data/coco).
+If you download from [COCO download page](http://mscoco.org/dataset/#download),
+```
+mv train2014.zip ./data/coco
+mv val2014.zip ./data/coco
+cd ./data/coco
+unzip train2014.zip
+unzip val2014.zip
+```
+If you use our share [link](https://drive.google.com/drive/folders/0B7IzDz-4yH_HOXdoaDU4dk40RFE?usp=sharing)
+```
+mv coco.tar.gz ./data/coco
+cd ./data/coco
+tar -zxvf coco.tar.gz
+unzip train2014.zip
+unzip val2014.zip
+```
 
 You can also modify the list file in ./data as you like. Each line in the list file follows the following format:
 ```
