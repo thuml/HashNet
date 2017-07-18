@@ -1,5 +1,5 @@
 # HashNet
-Code release for "HashNet: Deep Learning to Hash by Continuation" (ICCV 2017) 
+Code release for ["HashNet: Deep Learning to Hash by Continuation" (ICCV 2017)](https://arxiv.org/abs/1702.00758) 
 
 ## Datasets
 We use ImageNet, NUS-WIDE and COCO dataset in our experiments. You can download the ImageNet dataset and NUS-WIDE dataset [here](https://drive.google.com/drive/folders/0B7IzDz-4yH_HOXdoaDU4dk40RFE?usp=sharing).
