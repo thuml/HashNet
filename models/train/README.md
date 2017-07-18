@@ -30,7 +30,7 @@ layer {
 }
 ```
 Set the num_output to the code length you want.
-And then find the PairwiseLoss layer:
+And then find the pairwise_loss layer:
 ```
 layer {
   name: "pairwise_loss"
@@ -53,4 +53,4 @@ layer {
 Set the sigmoid_param to 10 / code length.
 
 ## Different datasets
-All the parameters are set for the datasets in our experiments. If you want to perform our methods on your own dataset, you need to calculate the number of 1s / the number of 0s in your train set and set class_num parameter in PairwiseLoss layer.
+All the parameters are set for the datasets in our experiments. If you want to perform our methods on your own dataset, you need to calculate the number of 1s / the number of 0s in your train set and set class_num parameter in pairwise_loss layer.
