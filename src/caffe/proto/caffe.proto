@@ -405,7 +405,6 @@ message LayerParameter {
   optional WindowDataParameter window_data_param = 129;
   optional ScaleTanHParameter scale_tanh_param = 147;
   optional PairwiseParameter pairwise_param = 148;
-  optional SignDiffusionParameter sign_diffusion_param = 149;
 }
 
 // Message that stores parameters used to apply transformation
@@ -751,13 +750,6 @@ message ExpParameter {
 }
 
 message ScaleTanHParameter {
-  optional float init_scale = 1 [default = 1.0];
-  optional uint32 step_size = 2 [default = 200];
-  optional float gamma = 3 [default = 1.0];
-  optional float power = 4 [default = 0];
-}
-
-message SignDiffusionParameter {
   optional float init_scale = 1 [default = 1.0];
   optional uint32 step_size = 2 [default = 200];
   optional float gamma = 3 [default = 1.0];
