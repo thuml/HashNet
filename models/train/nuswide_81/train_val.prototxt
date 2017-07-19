@@ -417,6 +417,6 @@ layer {
     l_lambda: 1.0
     class_num: 5.0
     sigmoid_param: 0.2 # 10 / the length of code
-    continous_similarity: false
+    continous_similarity: true
   }
 }
