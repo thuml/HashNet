@@ -131,10 +131,10 @@ results = pool.map(get_codes_and_labels, params)
 print("start combine")
 code_and_label = results[0]
 for i in range(1, nthreads):
-    [code_and_label['database_code'].append(c) for c in results[i]['database_code']]
-    [code_and_label['database_labels'].append(c) for c in results[i]['database_labels']]
-    [code_and_label['validation_code'].append(c) for c in results[i]['validation_code']]
-    [code_and_label['validation_labels'].append(c) for c in results[i]['validation_labels']]
+    code_and_label['database_code'] = np.vstack([code_and_label["database_code"], results[i]['database_code']])
+    code_and_label['database_labels'] = np.vstack([code_and_label["database_labels"],results[i]['database_labels']])
+    code_and_label['validation_code'] = np.vstack([code_and_label["validation_code"], results[i]['validation_code']])
+    code_and_label['validation_labels'] = np.vstack([code_and_label["validation_labels"], results[i]['validation_labels']])
 
 print("start predict")
 code_and_label['R'] = 5000
@@ -145,3 +145,4 @@ print("saving ...")
 code_and_label['path'] = str(args.save_path[0])
 save_code_and_label(code_and_label)
 print("saving done")
+
