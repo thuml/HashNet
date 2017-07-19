@@ -99,25 +99,10 @@ void PairwiseLossLayer<Dtype>::Forward_gpu(
 
     RemoveZero<Dtype><<<CAFFE_GET_BLOCKS(own_similarity_.count()), 
       CAFFE_CUDA_NUM_THREADS>>>(own_similarity_.count(), similarity1, similarity2);
-    /*caffe_gpu_memcpy(nthreads*sizeof(Dtype), similarity, own_similarity_.mutable_cpu_data());
-    for(int i = 0; i < outer_num_; i++){
-      LOG(INFO) << own_similarity_.cpu_data()[i];
-    }
-    caffe_gpu_memcpy(nthreads*sizeof(Dtype), similarity1, own_similarity_.mutable_cpu_data());
-    for(int i = 0; i < outer_num_; i++){
-      LOG(INFO) << own_similarity_.cpu_data()[i*outer_num_+i];
-    }
-    caffe_gpu_memcpy(nthreads*sizeof(Dtype), similarity2, own_similarity_.mutable_cpu_data());
-    for(int i = 0; i < outer_num_; i++){
-      LOG(INFO) << own_similarity_.cpu_data()[i*outer_num_+i];
-    }*/
+
     ContinousSimilarityProcess<Dtype><<<CAFFE_GET_BLOCKS(nthreads), 
       CAFFE_CUDA_NUM_THREADS>>>(nthreads, similarity, similarity1, similarity2, loss_data, outer_num_);
     caffe_gpu_memcpy(nthreads*sizeof(Dtype), loss_data, similarity1);
-    /*caffe_gpu_memcpy(nthreads*sizeof(Dtype), similarity1, own_similarity_.mutable_cpu_data());
-    for(int i = 0; i < outer_num_; i++){
-      LOG(INFO) << own_similarity_.cpu_data()[i];
-    }*/
   }
 
   SimilarityProcess<Dtype><<<CAFFE_GET_BLOCKS(nthreads), 
