@@ -417,6 +417,6 @@ layer {
     q_threshold: 15
     l_lambda: 1
     sigmoid_param: 0.2 # 10 / the length of code
-    continous_similarity: false
+    continous_similarity: true
   }
 }
