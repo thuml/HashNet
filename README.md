@@ -34,9 +34,9 @@ unzip train2014.zip
 unzip val2014.zip
 ```
 
-You can also modify the list file in ./data as you like. Each line in the list file follows the following format:
+You can also modify the list file(txt format) in ./data as you like. Each line in the list file follows the following format:
 ```
-image_name label_represented_by_0_and_1
+<image path><space><one hot label representation>
 ```
 ## Compiling
 The compiling process is the same as caffe. You can refer to Caffe installation instructions [here](http://caffe.berkeleyvision.org/installation.html).
