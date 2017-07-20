@@ -69,3 +69,5 @@ If you use this code for your research, please consider citing:
   year={2017}
 }
 ```
+## Contact
+If you have any problem about our code, feel free to contact caozhangjie14@gmail.com or describe your problem in Issues.
