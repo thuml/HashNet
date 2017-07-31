@@ -42,7 +42,8 @@ You can also modify the list file(txt format) in ./data as you like. Each line i
 The compiling process is the same as caffe. You can refer to Caffe installation instructions [here](http://caffe.berkeleyvision.org/installation.html).
 
 ## Training
-You can train the model for each dataset using the followling command.
+First, you need to download the AlexNet pre-trained model on ImageNet from [here](http://dl.caffe.berkeleyvision.org/bvlc_reference_caffenet.caffemodel) and move it to [./models/bvlc_reference_caffenet](./models/bvlc_reference_caffenet).
+Then, you can train the model for each dataset using the followling command.
 ```
 dataset_name = imagenet, nuswide_81 or coco
 ./build/tools/caffe train -solver models/train/dataset_name/solver.prototxt -weights ./models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel -gpu gpu_id
