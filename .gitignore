@@ -62,7 +62,7 @@ Makefile.config
 *.caffemodel.h5
 *.solverstate
 *.solverstate.h5
-*.binaryproto
+#*.binaryproto
 *leveldb
 *lmdb
 
