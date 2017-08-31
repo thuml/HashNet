@@ -3,7 +3,7 @@
 If you train your model for different code lengths, you need to find the encoding layer in deploy.prototxt and set the num_output to the code length.
 ```
 layer {
-  name: "encoding"
+  name: "fc8_flickr"
   type: "InnerProduct"
   bottom: "fc7"
   top: "fc8_flickr"
