@@ -4,7 +4,7 @@ You can set different code length in the train_val.prototxt file as follows.
 First, find the encoding layer:
 ```
 layer {
-  name: "encoding"
+  name: "fc8_flickr"
   type: "InnerProduct"
   bottom: "fc7"
   top: "fc8_code"
