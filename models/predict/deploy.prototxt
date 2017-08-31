@@ -308,7 +308,7 @@ layer {
   }
 }
 layer {
-  name: "encoding"
+  name: "fc8_flickr"
   type: "InnerProduct"
   bottom: "fc7"
   top: "fc8_flickr"
