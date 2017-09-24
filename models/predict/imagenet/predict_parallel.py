@@ -39,6 +39,8 @@ def mean_average_precision(params):
         Px = Lx.astype(float) / np.arange(1, R+1, 1)
         if relevant_num != 0:
             APx.append(np.sum(Px * imatch) / relevant_num)
+        else:
+            APx.append(np.sum(Px * imatch) / 1)
     
     return np.mean(np.array(APx))
         
