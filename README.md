@@ -58,6 +58,12 @@ python models/predict/dataset_name/predict_parallel.py --gpu gpu_id --model_path
 ```
 We provide some trained models for each dataset for each code length in our experiment for evaluation. You can download them [here](https://drive.google.com/drive/folders/0B7IzDz-4yH_HOXdoaDU4dk40RFE?usp=sharing) if you want to use them.
 
+If you have generated the hash code by the previous step or by other method and want to test the MAP of the hash code. You can specify the code_path parameter.
+```
+dataset_name = imagenet, nuswide_81 or coco
+python models/predict/dataset_name/predict_parallel.py --code_path the_path_of_your_hash_code
+```
+
 For more instructions about training and parameter setting, see the instructions in the [predicting directory](./models/predict).
 
 ## Citation
