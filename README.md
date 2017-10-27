@@ -1,6 +1,15 @@
 # HashNet
 Code release for ["HashNet: Deep Learning to Hash by Continuation" (ICCV 2017)](https://arxiv.org/abs/1702.00758) 
 
+## Prerequisites
+Linux or OSX
+
+NVIDIA GPU + CUDA-7.5 or CUDA-8.0 and corresponding CuDNN
+
+Caffe
+
+Python 2.7
+
 ## Datasets
 We use ImageNet, NUS-WIDE and COCO dataset in our experiments. You can download the ImageNet dataset and NUS-WIDE dataset [here](https://drive.google.com/drive/folders/0B7IzDz-4yH_HOXdoaDU4dk40RFE?usp=sharing).
 As for COCO dataset, we use COCO 2014, which can be downloaded [here](http://mscoco.org/dataset/#download). And in case of COCO changes in the future, we also provide a download link [here](https://drive.google.com/drive/folders/0B7IzDz-4yH_HOXdoaDU4dk40RFE?usp=sharing) on google drive.
