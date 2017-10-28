@@ -10,6 +10,11 @@ Caffe
 
 Python 2.7
 
+## Modification on Caffe
+- Add multi label layer which enable "ImageDataLayer" to process multi-label dataset.
+- Add "PairwiseLoss" layer implementing the weighted pairwise loss described in our paper. The 'sigmoid_param_' in the code is the \alpha in the adaptive sigmoid function.
+- Add "ScaleTanH" layer to enable continuation optimization described in our paper. The 'scale_' in the code is the \beta in the 'tanh' in continuation method. 
+
 ## Datasets
 We use ImageNet, NUS-WIDE and COCO dataset in our experiments. You can download the ImageNet dataset and NUS-WIDE dataset [here](https://drive.google.com/drive/folders/0B7IzDz-4yH_HOXdoaDU4dk40RFE?usp=sharing).
 As for COCO dataset, we use COCO 2014, which can be downloaded [here](http://mscoco.org/dataset/#download). And in case of COCO changes in the future, we also provide a download link [here](https://drive.google.com/drive/folders/0B7IzDz-4yH_HOXdoaDU4dk40RFE?usp=sharing) on google drive.
