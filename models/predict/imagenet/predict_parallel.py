@@ -108,7 +108,7 @@ def get_codes_and_labels(params):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Predict Hash Code.')
-    parser.add_argument('--gpu', metavar='N', type=str, nargs='?', default="0",
+    parser.add_argument('--gpu', metavar='N', type=int, nargs='?', default="0",
                     help='running gpu id')
     parser.add_argument('--model_path', type=str, nargs='?',                    
                     help='the caffemodel path')
@@ -131,14 +131,14 @@ if __name__ == "__main__":
         params = []
         for i in range(nthreads):
             params.append(dict(model_file="./models/predict/deploy.prototxt",
-                  pretrained_model=args.model_path[0],
+                  pretrained_model=args.model_path,
                   image_dims=(256,256),
                   scale=255,
                   database="./data/imagenet/test/database" + str(i) + ".txt",
                   validation="./data/imagenet/test/test" + str(i) + ".txt",
                   batch_size=50,
                   mean_file="./python/caffe/imagenet/ilsvrc_2012_mean.npy",
-                  gpu=args.gpu[0]))
+                  gpu=args.gpu))
 
         pool = Pool(nthreads)
         results = pool.map(get_codes_and_labels, params)
