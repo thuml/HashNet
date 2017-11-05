@@ -151,7 +151,7 @@ if __name__ == "__main__":
             code_and_label['validation_labels'] = np.vstack([code_and_label["validation_labels"], results[i]['validation_labels']])
 
         print("saving ...")
-        code_and_label['path'] = str(args.save_path[0])
+        code_and_label['path'] = str(args.save_path)
         save_code_and_label(code_and_label)
         print("saving done")
 
