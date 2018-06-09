@@ -1,5 +1,5 @@
 # HashNet
-Caffe version for ["HashNet: Deep Learning to Hash by Continuation" (ICCV 2017)](https://arxiv.org/abs/1702.00758) 
+Caffe implementation for ["HashNet: Deep Learning to Hash by Continuation" (ICCV 2017)](https://arxiv.org/abs/1702.00758) 
 
 ## Prerequisites
 Linux or OSX

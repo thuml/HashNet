@@ -3,7 +3,7 @@ HashNet Library
 
 This is the code release for "HashNet: Deep Learning to Hash by Continuation" (ICCV 2017)
 
-The pytorch version is under developing and the version test on COCO dataset and PyTorch Version before 0.4.0 has been released.
+The pytorch version is under developing. We have released the version test on PyTorch Version 0.3.1.
 
 ## Citation
 If you use this code for your research, please consider citing:
