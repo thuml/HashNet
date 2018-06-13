@@ -4,7 +4,7 @@ PyTorch implementation for ["HashNet: Deep Learning to Hash by Continuation" (IC
 ## Prerequisites
 Linux or OSX
 
-NVIDIA GPU + CUDA (may CuDNN) and corresponding PyTorch framework
+NVIDIA GPU + CUDA (may CuDNN) and corresponding PyTorch framework (version 0.3.1)
 
 Python 2.7/3.5
 
