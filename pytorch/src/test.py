@@ -77,7 +77,6 @@ def code_predict(loader, model, name, test_10crop=True, gpu=True):
             else:
                 all_output = torch.cat((all_output, outputs.data.float()), 0)
                 all_label = torch.cat((all_label, labels.float()), 0)
-            print(str(i)+"/"+str(len(loader[name+"0"])))
     else:
         iter_val = iter(loader[name])
         for i in range(len(loader[name])):
@@ -96,8 +95,7 @@ def code_predict(loader, model, name, test_10crop=True, gpu=True):
             else:
                 all_output = torch.cat((all_output, outputs.data.cpu().float()), 0)
                 all_label = torch.cat((all_label, labels.float()), 0)
-            print(str(i)+"/"+str(len(loader[name])))
-    return all_output, all_label
+    return torch.sign(all_output), all_label
 
 def predict(config):
     ## set pre-process
@@ -162,17 +160,20 @@ def predict(config):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Transfer Learning')
-    parser.add_argument('gpu_id', type=str, nargs='?', default='0', help="device id to run")
+    parser.add_argument('--gpu_id', type=str, default='0', help="device id to run")
+    parser.add_argument('--dataset', type=str, default='coco', help="dataset name")
+    parser.add_argument('--hash_bit', type=int, default=48, help="number of hash code bits")
+    parser.add_argument('--prefix', type=str, help="save path prefix")
+    parser.add_argument('--snapshot', type=str, help="model path prefix")
+
     args = parser.parse_args()
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_id 
 
     # train config  
     config = {}
-    config["dataset"] = "coco"
-    config["prefix"] = "iter_09000"
-    config["net_name"] = "resnet"
-    config["snapshot_path"] = "../snapshot/"+config["dataset"]+"_48bit_"+config["net_name"]+"/"+config["prefix"]+"_model.pth.tar"
-    config["output_path"] = "../snapshot/"+config["dataset"]+"_48bit_" + config["net_name"]
+    config["dataset"] = args.dataset 
+    config["snapshot_path"] = "../snapshot/"+config["dataset"]+"_"+str(args.hash_bit)+"bit_"+args.prefix+"/"+args.snapshot+"_model.pth.tar"
+    config["output_path"] = "../snapshot/"+config["dataset"]+"_"+str(args.hash_bit)+"bit_"+args.prefix
 
     config["prep"] = {"test_10crop":False, "resize_size":256, "crop_size":224}
     if config["dataset"] == "imagenet":
@@ -190,9 +191,10 @@ if __name__ == "__main__":
     code_and_label = predict(config)
 
     mAP = mean_average_precision(code_and_label, config["R"])
+    print(config["snapshot_path"])
     print ("MAP: "+ str(mAP))
     print("saving ...")
-    save_code_and_label(code_and_label, osp.join(config["output_path"], config["prefix"]))
+    save_code_and_label(code_and_label, osp.join(config["output_path"], args.snapshot))
     print("saving done")
 
 

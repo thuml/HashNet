@@ -136,21 +136,7 @@ def train(config):
     prep_dict["train_set2"] = prep.image_train( \
                             resize_size=prep_config["resize_size"], \
                             crop_size=prep_config["crop_size"])
-    if prep_config["test_10crop"]:
-        prep_dict["database"] = prep.image_test_10crop( \
-                            resize_size=prep_config["resize_size"], \
-                            crop_size=prep_config["crop_size"])
-        prep_dict["test"] = prep.image_test_10crop( \
-                            resize_size=prep_config["resize_size"], \
-                            crop_size=prep_config["crop_size"])
-    else:
-        prep_dict["database"] = prep.image_test( \
-                            resize_size=prep_config["resize_size"], \
-                            crop_size=prep_config["crop_size"])
-        prep_dict["test"] = prep.image_test( \
-                            resize_size=prep_config["resize_size"], \
-                            crop_size=prep_config["crop_size"])
-               
+
     ## prepare data
     dsets = {}
     dset_loaders = {}
@@ -165,31 +151,6 @@ def train(config):
     dset_loaders["train_set2"] = util_data.DataLoader(dsets["train_set2"], \
             batch_size=data_config["train_set2"]["batch_size"], \
             shuffle=True, num_workers=4)
-
-    if prep_config["test_10crop"]:
-        for i in range(10):
-            dsets["database"+str(i)] = ImageList(open(data_config["database"]["list_path"]).readlines(), \
-                                transform=prep_dict["database"]["val"+str(i)])
-            dset_loaders["database"+str(i)] = util_data.DataLoader(dsets["database"+str(i)], \
-                                batch_size=data_config["database"]["batch_size"], \
-                                shuffle=False, num_workers=4)
-            dsets["test"+str(i)] = ImageList(open(data_config["test"]["list_path"]).readlines(), \
-                                transform=prep_dict["test"]["val"+str(i)])
-            dset_loaders["test"+str(i)] = util_data.DataLoader(dsets["test"+str(i)], \
-                                batch_size=data_config["test"]["batch_size"], \
-                                shuffle=False, num_workers=4)
-
-    else:
-        dsets["database"] = ImageList(open(data_config["database"]["list_path"]).readlines(), \
-                                transform=prep_dict["database"])
-        dset_loaders["database"] = util_data.DataLoader(dsets["database"], \
-                                batch_size=data_config["database"]["batch_size"], \
-                                shuffle=False, num_workers=4)
-        dsets["test"] = ImageList(open(data_config["test"]["list_path"]).readlines(), \
-                                transform=prep_dict["test"])
-        dset_loaders["test"] = util_data.DataLoader(dsets["test"], \
-                                batch_size=data_config["test"]["batch_size"], \
-                                shuffle=False, num_workers=4)
 
     hash_bit = config["hash_bit"]
 
@@ -253,16 +214,21 @@ def train(config):
                                  l_threshold=config["loss"]["l_threshold"], \
                                  class_num=config["loss"]["class_num"])
 
-        total_loss = config["loss"]["l_weight"] * similarity_loss
-        total_loss.backward()
-        print("Iter: {:05d}, l_loss: {:.3f}".format(i, similarity_loss.float().data[0]))
-        config["out_file"].write("Iter: {:05d}, l_loss: {:.3f}".format(i, \
-                    similarity_loss.float().data[0]))
+        similarity_loss.backward()
+        print("Iter: {:05d}, loss: {:.3f}".format(i, similarity_loss.float().data[0]))
+        config["out_file"].write("Iter: {:05d}, loss: {:.3f}".format(i, \
+            similarity_loss.float().data[0]))
         optimizer.step()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Transfer Learning')
-    parser.add_argument('gpu_id', type=str, nargs='?', default='0', help="device id to run")
+    parser.add_argument('--gpu_id', type=str, default='0', help="device id to run")
+    parser.add_argument('--dataset', type=str, default='coco', help="dataset name")
+    parser.add_argument('--hash_bit', type=int, default=48, help="number of hash code bits")
+    parser.add_argument('--net', type=str, default='ResNet50', help="base network type")
+    parser.add_argument('--prefix', type=str, help="save path prefix")
+    parser.add_argument('--lr', type=float, help="learning rate")
+    parser.add_argument('--class_num', type=float, help="positive negative pairs balance weight")
     args = parser.parse_args()
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_id 
 
@@ -270,38 +236,41 @@ if __name__ == "__main__":
     config = {}
     config["num_iterations"] = 10000
     config["snapshot_interval"] = 3000
-    config["dataset"] = "coco"
-    config["hash_bit"] = 48
-    config["output_path"] = "../snapshot/"+config["dataset"]+"_"+str(config["hash_bit"])+"bit_resnet_0.0003"
+    config["dataset"] = args.dataset
+    config["hash_bit"] = args.hash_bit
+    config["output_path"] = "../snapshot/"+config["dataset"]+"_"+ \
+                            str(config["hash_bit"])+"bit_"+args.prefix
     if not osp.exists(config["output_path"]):
         os.mkdir(config["output_path"])
     config["out_file"] = open(osp.join(config["output_path"], "log.txt"), "w")
 
     if not osp.exists(config["output_path"]):
         os.mkdir(config["output_path"])
-    config["network"] = {"type":network.ResNetFc, "params":{"name":"ResNet50", "hash_bit":config["hash_bit"], "use_hashnet":True} }
+    config["network"] = {}
+    if "ResNet" in args.net:
+        config["network"]["type"] = network.ResNetFc
+        config["network"]["params"] = {"name":args.net, "hash_bit":config["hash_bit"]}
+    elif "VGG" in args.net:
+        config["network"]["type"] = network.VGGFc
+        config["network"]["params"] = {"name":args.net, "hash_bit":config["hash_bit"]}
+    elif "AlexNet" in args.net:
+        config["network"]["type"] = network.AlexNetFc
+        config["network"]["params"] = {"hash_bit":config["hash_bit"]}
     config["prep"] = {"test_10crop":True, "resize_size":256, "crop_size":224}
     config["optimizer"] = {"type":"SGD", "optim_params":{"lr":1.0, "momentum":0.9, \
                            "weight_decay":0.0005, "nesterov":True}, "lr_type":"step", \
-                           "lr_param":{"init_lr":0.0003, "gamma":0.5, "step":2000} }
-    config["loss"] = {"l_weight":1.0, "l_threshold":15.0, "sigmoid_param":10.0/config["hash_bit"]}
+                           "lr_param":{"init_lr":args.lr, "gamma":0.5, "step":2000} }
+
+    config["loss"] = {"l_weight":1.0, "q_weight":0, "l_threshold":15.0, "sigmoid_param":10./config["hash_bit"], "class_num":args.class_num}
 
     if config["dataset"] == "imagenet":
         config["data"] = {"train_set1":{"list_path":"../data/imagenet/train.txt", "batch_size":36}, \
-                          "train_set2":{"list_path":"../data/imagenet/train.txt", "batch_size":36}, \
-                          "database":{"list_path":"../data/imagenet/database.txt", "batch_size":4}, \
-                          "test":{"list_path":"../data/imagenet/test.txt", "batch_size":4}}
-        config["loss"]["class_num"] = 100.0
+                          "train_set2":{"list_path":"../data/imagenet/train.txt", "batch_size":36}}
     elif config["dataset"] == "nus_wide":
         config["data"] = {"train_set1":{"list_path":"../data/nus_wide/train.txt", "batch_size":36}, \
-                          "train_set2":{"list_path":"../data/nus_wide/train.txt", "batch_size":36}, \
-                          "database":{"list_path":"../data/nus_wide/database.txt", "batch_size":4}, \
-                          "test":{"list_path":"../data/nus_wide/test.txt", "batch_size":4}}
-        config["loss"]["class_num"] = 5.0
+                          "train_set2":{"list_path":"../data/nus_wide/train.txt", "batch_size":36}}
     elif config["dataset"] == "coco":
         config["data"] = {"train_set1":{"list_path":"../data/coco/train.txt", "batch_size":36}, \
-                          "train_set2":{"list_path":"../data/coco/train.txt", "batch_size":36}, \
-                          "database":{"list_path":"../data/coco/database.txt", "batch_size":4}, \
-                          "test":{"list_path":"../data/coco/test.txt", "batch_size":4}}
-        config["loss"]["class_num"] = 1.0
+                          "train_set2":{"list_path":"../data/coco/train.txt", "batch_size":36}}
+    print(config["loss"])
     train(config)

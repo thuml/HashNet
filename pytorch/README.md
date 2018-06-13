@@ -51,21 +51,29 @@ First, you can manually download the PyTorch pre-trained model introduced in `to
 Then, you can train the model for each dataset using the followling command.
 ```
 cd src
-python train.py gpu_id
+python train.py --gpu_id 0 --dataset coco --prefix resnet50_hashnet --hash_bit 48 --net ResNet50 --lr 0.0003 --class_num 1.0
 ```
-You can set the `config' parameter to switch between different experiments. 
-- config["hash_bit"] is the number of bits of the hash codes.
-- config["dataset"] is the dataset selection. In our experiments, it can be "imagenet", "nus_wide" or "coco".
-- config["output_path"] is the path to output model snapshot and log file.
-- config["network"] sets the base network. For details of setting, you can see network.py.
-    - For AlexNet, ```config["network"] = {"type":network.AlexNetFc, "params":{"hash_bit":config["hash_bit"], "use_hashnet":True}}```
-    - For VGG Net, ```config["network"] = {"type":network.VGGNetFc, "params":{"name":"VGG16BN", "hash_bit":config["hash_bit"], "use_hashnet":True}}```
-    - For ResNet, ```config["network"] = {"type":network.ResNetFc, "params":{"name":"ResNet50", "hash_bit":config["hash_bit"], "use_hashnet":True}}```
+You can set the command parameters to switch between different experiments. 
+- "gpu_id" is the GPU ID to run experiments.
+- "hash_bit" parameter is the number of bits of the hash codes.
+- "dataset" is the dataset selection. In our experiments, it can be "imagenet", "nus_wide" or "coco".
+- "prefix" is the path to output model snapshot and log file in "snapshot" directory.
+- "net" sets the base network. For details of setting, you can see network.py.
+    - For AlexNet, "net" is AlexNet.    
+    - For VGG Net, "net" is like VGG16. Detail names are in network.py.
+    - For ResNet, "net" is like ResNet50. Detail names are in network.py.
+- "lr" is the learning rate.
+- "class_num" is the positive and negative pairs balance weight.
 
 ## Evaluation
 You can evaluate the Mean Average Precision(MAP) result on each dataset using the followling command.
 ```
 cd src
-python test.py gpu_id
+python test.py --gpu_id 0 --dataset coco --prefix resnet50_hashnet --hash_bit 48 --snapshot iter_09000
 ```
-Set the parameters in test.py first.
+You can set the command parameters to switch between different experiments. 
+- "gpu_id" is the GPU ID to run experiments.
+- "hash_bit" parameter is the number of bits of the hash codes.
+- "dataset" is the dataset selection. In our experiments, it can be "imagenet", "nus_wide" or "coco".
+- "prefix" is the path to output model snapshot and log file in "snapshot" directory.
+- "snapshot" is the snapshot model name. "iter_09000" means the model snapshoted at iteration 9000.
