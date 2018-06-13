@@ -221,7 +221,7 @@ def train(config):
         optimizer.step()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Transfer Learning')
+    parser = argparse.ArgumentParser(description='HashNet')
     parser.add_argument('--gpu_id', type=str, default='0', help="device id to run")
     parser.add_argument('--dataset', type=str, default='coco', help="dataset name")
     parser.add_argument('--hash_bit', type=int, default=48, help="number of hash code bits")
