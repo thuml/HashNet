@@ -7,6 +7,8 @@ The caffe version is in directory "caffe".
 
 The pytorch version is in directory "pytorch". We have released the version test on PyTorch Version 0.3.1.
 
+Thank @soon-will for contributing the 'pairwise_loss_updated' with weight in pytorch version.
+
 ## Citation
 If you use this code for your research, please consider citing:
 ```
